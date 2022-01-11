@@ -22,6 +22,22 @@ const CreateListing = () => {
     longitude: 0,
   });
 
+  const {
+    type,
+    name,
+    bedrooms,
+    bathrooms,
+    parking,
+    furnished,
+    address,
+    offer,
+    regularPrice,
+    discountedPrice,
+    images,
+    latitute,
+    longitude,
+  } = formData;
+
   const auth = getAuth();
   const navigate = useNavigate();
   const isMounted = useRef(true);
@@ -43,7 +59,62 @@ const CreateListing = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMounted]);
 
-  return loading ? <Spinner /> : <div>create</div>;
+  const onSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  const onMutate = (e) => {};
+
+  return loading ? (
+    <Spinner />
+  ) : (
+    <div className='profile'>
+      <header>
+        <p className='pageHeader'>Create Listing</p>
+      </header>
+
+      <main>
+        <form onSubmit={onSubmit}>
+          <label htmlFor='' className='formLabel'>
+            Sell/Rent
+          </label>
+          <div className='formButtons'>
+            <button
+              type='button'
+              className={type === 'sale' ? 'formButtonActive' : 'formButton'}
+              id='type'
+              value='sale'
+              onClick={onMutate}
+            >
+              Sell
+            </button>
+            <button
+              type='button'
+              className={type === 'rent' ? 'formButtonActive' : 'formButton'}
+              id='type'
+              value='rent'
+              onClick={onMutate}
+            >
+              Rent
+            </button>
+          </div>
+          <label htmlFor='' className='formLabel'>
+            Name
+          </label>
+          <input
+            className='formInputName'
+            type='text'
+            id='name'
+            value={name}
+            onChange={onMutate}
+            maxLength='32'
+            minLength='10'
+            required
+          />
+        </form>
+      </main>
+    </div>
+  );
 };
 
 export default CreateListing;
